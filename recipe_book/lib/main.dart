@@ -35,29 +35,38 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-String name1 = "Chicken Teryyaki";
-List<String> item1 = ["one","two"];
-List<String> instruction1 = ["one","two"];
+String name1 = "Chicken Teriyaki";
+List<String> item1 = ["5 LB Chicken","1 carrot", '2 bell peppers', 
+"1 cup soy sauce ",
+"3 Tbsp brown sugar ",
+"1 Tbsp water ",
+"1 clove garlic, minced ",
+"1 tsp grated fresh ginger ",
+"2 Tbsp cooking oil, divided "];
+List<String> instruction1 = ["Prepare the marinade first.","Stir together the soy sauce, brown sugar, water, garlic, ginger, and 1 Tbsp of the cooking oil in a bowl",
+"Let the chicken marinate for 30 minutes to one day", "Cook the chicken" ,"Add vegetables", "Enjoy" ];
 
-String name2 = "Chicken Teryyaki";
-List<String> item2 = ["one","two"];
-List<String> instruction2 = ["one","two"];
+String name2 = "Spagetti and Meatballs";
+List<String> item2 = ["1 Box of spagetti","3 cans of Tomato Sauce","4 Meatballs"];
+List<String> instruction2 = ["Bring a pot of water to a boil","Add the Noodles","Cook however long you want","Drain water from noodles","Cook the meatballs","Add sauce to meatballs",'Add noodles to the meatballs and sauce once done cooking','Enjoy'];
 
-String name3 = "Chicken Teryyaki";
-List<String> item3 = ["one","two"];
-List<String> instruction3 = ["one","two"];
+String name3 = "Cheesy Hamburgars";
+List<String> item3 = ["1 whole cow","5 Slices of bread"];
+List<String> instruction3 = ["Grab your keys",'Get into the car','Look up closest Mcdonolds','Set cow free'];
 
-String name4 = "Chicken Teryyaki";
-List<String> item4 = ["one","two"];
-List<String> instruction4 = ["one","two"];
+String name4 = "Hotdogs and potatos";
+List<String> item4 = ["1 Hotdog",'4.5 potatos','3 hotdog buns'];
+List<String> instruction4 = ["Toss the buns on the stove","Put the potatos in the microwave on high for 3.5 hours",'Boil the hotdog in a pot off oil at 400 degrees F','When finished cooking remove buns from stove',
+"Assemble the hotdog",'Hope the potatos are still potatos'];
 
-String name5 = "Chicken Teryyaki";
-List<String> item5 = ["one","two"];
-List<String> instruction5 = ["one","two"];
+String name5 = "One Halfsized Large Pizza";
+List<String> item5 = ["1 premade oven pizza"];
+List<String> instruction5 = ["Remove pizza from box",'Preheat oven to 365 degrees F','Put pizza in the oven when up to temp','Set timer to 30 mins or wait til cheese melts','Remove pizza from oven when cooked and turn oven off'
+,'Slice pizza into 7 slices','Enjoy'];
 
-String name6 = "Chicken Teryyaki";
-List<String> item6 = ["one","two"];
-List<String> instruction6 = ["one","two"];
+String name6 = "Some pickes and a slice of bread";
+List<String> item6 = ["4 Meduim sized pickles","2 Slices of bread","1 Pinch of Salt",'1 Ounce of butter', "4 chocolate sprinkes"];
+List<String> instruction6 = ["Lay bread vertically","Install pickles counterclockwise","Put the butter in the middle","Sprinkle the salt and chocolate sprinkles", "Enjoy?"];
 
 
 
@@ -159,12 +168,17 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(recipe.title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text (
+              style: const TextStyle( fontSize:30, fontWeight: FontWeight.bold),
+              
+              recipe.title
+            ),
+            const SizedBox(height: 20.0),
             Text(
                   recipe.ingredients.join(" \n"),
                   style: const TextStyle(fontSize: 15.0),
@@ -180,6 +194,7 @@ class DetailScreen extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
+                
                 Navigator.pop(context);
               },
               child: const Text('Return'),
