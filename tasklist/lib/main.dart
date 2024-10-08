@@ -8,7 +8,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: TaskListScreen(),
+      theme:ThemeData(
+      primarySwatch: Colors.green,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: const TaskListScreen(),
+
     );
   }
 }
@@ -21,6 +26,8 @@ class Task {
 }
 
 class TaskListScreen extends StatefulWidget {
+  const TaskListScreen({super.key});
+
   @override
   _TaskListScreenState createState() => _TaskListScreenState();
 }
@@ -55,7 +62,8 @@ class _TaskListScreenState extends State<TaskListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task Manager'),
+        title: const Text('Task Manager'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -66,18 +74,18 @@ class _TaskListScreenState extends State<TaskListScreen> {
                 Expanded(
                   child: TextField(
                     controller: taskController,
-                    decoration: InputDecoration(labelText: 'Enter task name'),
+                    decoration: InputDecoration(labelText: 'Enter task name',border:OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                   ),
                 ),
                 
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
 
                 ElevatedButton(
                   onPressed: () {
                     addTask();
                     
                   },
-                  child: Text('Add'),
+                  child: const Text('Add'),
                 ),
               ],
             ),
@@ -98,13 +106,18 @@ class _TaskListScreenState extends State<TaskListScreen> {
                     title: Text(
                       task.name,
                       style: TextStyle(
+                          fontSize: 18,
                           decoration: task.isCompleted
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none),
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                                color: task.isCompleted
+                                    ? Colors.grey
+                                    : Colors.black,
+                              ),
                     ),
                    
                     trailing: IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () => removeTask(index),
                     ),
                   );
