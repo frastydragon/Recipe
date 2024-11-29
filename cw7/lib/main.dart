@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     messaging = FirebaseMessaging.instance;
     messaging.subscribeToTopic("messaging");
     messaging.getToken().then((value) {
-      print(value);
+      print("FCM Token: $value");
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
