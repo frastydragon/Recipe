@@ -4,7 +4,26 @@ import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 
 Future<void> _messageHandler(RemoteMessage message) async {
-  print('background message ${message.notification!.body}');
+  print('Background message: ${message.notification?.body}');
+  // Parse data in the background message
+  String notificationType = message.data['type'] ?? 'default';
+  _handleNotification(notificationType, message);
+}
+
+void _handleNotification(String type, RemoteMessage message) {
+  switch (type) {
+    case 'type1':
+      // Handle type1 notification
+      print("Handling type1 notification");
+      break;
+    case 'type2':
+      // Handle type2 notification
+      print("Handling type2 notification");
+      break;
+    default:
+      // Default case for unknown types
+      print("Handling default notification");
+  }
 }
 
 void main() async {
@@ -53,29 +72,82 @@ class _MyHomePageState extends State<MyHomePage> {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       print("Message received");
-      print(event.notification!.body);
+      print(event.notification?.body);
       print(event.data.values);
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Notification"),
-            content: Text(event.notification!.body!),
-            actions: [
-              TextButton(
-                child: Text("Ok"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
+
+      // Parse the notification type from the message data
+      String notificationType = event.data['type'] ?? 'default';
+
+      // Handle the notification type
+      _handleNotification(notificationType, event);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       print('Message clicked!');
+      // Handle notification when app is opened
     });
+  }
+
+  void _handleNotification(String type, RemoteMessage event) {
+    switch (type) {
+      case 'type1':
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Type 1 Notification"),
+              content: Text(event.notification?.body ?? 'No content'),
+              actions: [
+                TextButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        break;
+      case 'type2':
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Type 2 Notification"),
+              content: Text(event.notification?.body ?? 'No content'),
+              actions: [
+                TextButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        break;
+      default:
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Default Notification"),
+              content: Text(event.notification?.body ?? 'No content'),
+              actions: [
+                TextButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        break;
+    }
   }
 
   @override
