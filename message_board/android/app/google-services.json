@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "366745071741",
+    "project_id": "message-app-1d6ae",
+    "storage_bucket": "message-app-1d6ae.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366745071741:android:21d6a321c129073a5a8114",
+        "android_client_info": {
+          "package_name": "com.example.message_board"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366745071741-hfbatcmq2h1hes2rl0uev2d63a2chgr4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDchu1WfanSGS4IbYArJ-TXQyNBZ6Qymlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366745071741-hfbatcmq2h1hes2rl0uev2d63a2chgr4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
