@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:provider/provider.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -94,14 +95,59 @@ class LoginScreen extends StatelessWidget {
               },
               child: Text('Login'),
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterScreen()),
+                );
+              },
+              child: Text('Don\'t have an account? Sign Up'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class RegisterScreen extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    return Scaffold(
+      appBar: AppBar(title: Text('Register')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+            ),
+            TextField(
+              controller: passwordController,
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
             ElevatedButton(
               onPressed: () async {
                 await authService.signUp(
                   emailController.text,
                   passwordController.text,
                 );
+                Navigator.pop(context);
               },
               child: Text('Sign Up'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Go back to login
+              },
+              child: Text('Already have an account? Login'),
             ),
           ],
         ),
@@ -119,13 +165,11 @@ class _TaskListScreenState extends State<TaskListScreen> {
   final TextEditingController taskController = TextEditingController();
   final FirebaseDatabase database = FirebaseDatabase.instance;
   late DatabaseReference taskRef;
-  late DatabaseReference subTaskRef;
 
   @override
   void initState() {
     super.initState();
     taskRef = database.ref('tasks');
-    subTaskRef = database.ref('subTasks');
   }
 
   void _addTask() {
@@ -149,19 +193,20 @@ class _TaskListScreenState extends State<TaskListScreen> {
     taskRef.child(taskId).remove();
   }
 
-  void _addSubTask(String taskId, String subTaskName, String timeFrame) {
-    final subTaskId = subTaskRef.push().key;
-    subTaskRef.child(subTaskId!).set({
-      'taskId': taskId,
-      'name': subTaskName,
-      'timeFrame': timeFrame,
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Task List')),
+      appBar: AppBar(
+        title: Text('Task List'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              Provider.of<AuthService>(context, listen: false).signOut();
+            },
+          )
+        ],
+      ),
       body: Column(
         children: [
           Padding(
