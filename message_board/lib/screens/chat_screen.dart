@@ -42,10 +42,18 @@ class _ChatScreenState extends State<ChatScreen> {
                   .where('boardName', isEqualTo: widget.boardName)
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
+                builder: (context, snapshot) {
+                // Check if the connection is still waiting
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 }
+
+              // Check if snapshot has data or not
+                if (!snapshot.hasData) {
+                  return Center(child: Text('No data available.'));
+                }
+
+              // Extract the messages
                 final messages = snapshot.data!.docs;
                 return ListView.builder(
                   reverse: true,
@@ -55,9 +63,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     return ListTile(
                       title: Text(message['message']),
                       subtitle: Text(
-                        '${message['username']} • ${message['timestamp']?.toDate()}',
+                      '${message['username']} • ${message['timestamp']?.toDate()}',
                       ),
-                    );
+                    )   ;
                   },
                 );
               },
