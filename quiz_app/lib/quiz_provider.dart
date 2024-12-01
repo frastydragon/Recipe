@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 class QuizProvider with ChangeNotifier {
   List<dynamic> _questions = [];
+  
   int _currentQuestionIndex = 0;
   int _score = 0;
 
